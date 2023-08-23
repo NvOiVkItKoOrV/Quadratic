@@ -1,0 +1,2 @@
+all: main.cpp quadratic_solver_func.cpp 
+    g++ main.cpp quadratic_solver_func.cpp -o out
