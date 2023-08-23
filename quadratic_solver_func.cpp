@@ -1,115 +1,82 @@
-#include"quadratic_solver.h"
+#include <stdio.h>
+#include <assert.h>
+#include <math.h>
 
-void input_coefficients(coefficients *set_of_numbers)
+#include"types.h"
+#include"quadratic_solver_func.h"
+
+void quadratic_equation_solver (const coefficients set_of_coeffs, solutions *roots)
 {
-    assert(set_of_numbers != nullptr);
-    /*printf("Enter coefficients a b c:\n");
+    assert(roots);
 
-    while( scanf("%lg %lg %lg", &(set_of_numbers->a), &(set_of_numbers->b), &(set_of_numbers->c)) != 3 )
+    if (fabs(set_of_coeffs.a) <= EPSILON)
     {
-        scanf("%*[^\n]");
-        printf("Uncorrectly entered, please, try again:");
-    }*/
-    int right_coeffs_count  = 3;
-    int valid_coeff_counter = 0;
-
-    do 
-    {
-        printf("Enter coefficients a b c:\n");
-        valid_coeff_counter = scanf("%lg %lg %lg", &(set_of_numbers->a), &(set_of_numbers->b), &(set_of_numbers->c));
-        printf("%d", valid_coeff_counter);
-    }
-    while(valid_coeff_counter != right_coeffs_count);
-
-}
-
-void quadratic_equation_solver(const coefficients set_of_numbers, solutions *roots)
-{
-
-    if (set_of_numbers.a == 0.0) 
-    {
-        line_equation_solver(set_of_numbers, roots);
+        line_equation_solver (set_of_coeffs, roots);
     }
     else
     {
-        roots->discriminant = discr_calculator(set_of_numbers);
+        roots->discriminant = discriminant_calculator (set_of_coeffs);
 
-        if (roots->discriminant < 0.0)
+        if (roots->discriminant < -EPSILON)
         {
-            roots->x1           = 0.0;
-            roots->x1           = 0.0;
-            roots->num_of_roots = ZERO_ROOTS;            
+            default_parameters(roots);
+            roots->num_of_roots = ZERO_ROOTS;
         }
-        else if (roots->discriminant == 0.0)
+        else if (fabs(roots->discriminant) <= EPSILON)
         {
-            roots->x1 = -(set_of_numbers.b) / (2 * set_of_numbers.a);
-            roots->x2 = 0.0;
+            roots->x1 = -(set_of_coeffs.b) / (2 * set_of_coeffs.a);
+            roots->x2 = DEFAULT_NUMBER;
             roots->num_of_roots = ONE_ROOT;
         }
-        else if (roots->discriminant > 0.0)
+        else if (roots->discriminant > EPSILON)
         {
-            roots->x1 = (-(set_of_numbers.b) - sqrt(roots->discriminant)) / (2 * set_of_numbers.a);
-            roots->x2 = (-(set_of_numbers.b) + sqrt(roots->discriminant)) / (2 * set_of_numbers.a);
+            double sqrt_discriminant = sqrt(roots->discriminant);
+
+            roots->x1 = (-(set_of_coeffs.b) - sqrt_discriminant) / (2 * set_of_coeffs.a);
+            roots->x2 = (-(set_of_coeffs.b) + sqrt_discriminant) / (2 * set_of_coeffs.a);
             roots->num_of_roots = TWO_ROOTS;
         }
     }
 }
 
-void line_equation_solver(const coefficients set_of_numbers, solutions *roots)
+void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
 {
-    if (set_of_numbers.b == 0.0)
+    assert(roots);
+
+    if (fabs(set_of_coeffs.b) <= EPSILON)
     {
-        if(set_of_numbers.c == 0.0)
+        if(fabs(set_of_coeffs.c) <= EPSILON)
         {
-            roots->x1           = 0.0;
-            roots->x2           = 0.0;
-            roots->discriminant = 0.0;
+            default_parameters(roots);
             roots->num_of_roots = INF_ROOTS;
         }
         else
         {
-            roots->x1           = 0.0;
-            roots->x2           = 0.0;
-            roots->discriminant = 0.0;
+            default_parameters(roots);
             roots->num_of_roots = ZERO_ROOTS;
         }
     }
     else
     {
-    roots->x1           = (-set_of_numbers.c / set_of_numbers.b) ;
-    roots->x2           = (roots->x1);
-    roots->discriminant = 0.0;
+    roots->x1           = -set_of_coeffs.c / set_of_coeffs.b;
+    roots->x2           = roots->x1;
+    roots->discriminant = DEFAULT_NUMBER;
     roots->num_of_roots = ONE_ROOT;
     }
 }
 
-void output_coefficients(const solutions roots)
+
+double discriminant_calculator(const coefficients set_of_coeffs)
 {
-    switch(roots.num_of_roots)
-    {
-    case 0:
-        printf("No roots\n");
-        break;
-
-    case 1:
-        printf("One root:%lf\n", roots.x1);
-        break;
-
-    case 2:
-        printf("Two roots:%lf %lf\n", roots.x1, roots.x2);
-        break;
-
-    case (-1):
-        printf("Infinity roots\n");
-        break;
-
-    default:
-        printf("Programm is died :(\n");
-        break;
-    }
+    return (set_of_coeffs.b * set_of_coeffs.b) - (4 * set_of_coeffs.a * set_of_coeffs.c);
 }
 
-double discr_calculator(const coefficients set_of_numbers)
+
+void default_parameters(solutions *roots)
 {
-    return (set_of_numbers.b * set_of_numbers.b) - (4 * set_of_numbers.a * set_of_numbers.c);
+    assert(roots);
+
+    roots->x1           = DEFAULT_NUMBER;
+    roots->x2           = DEFAULT_NUMBER;
+    roots->discriminant = DEFAULT_NUMBER;
 }

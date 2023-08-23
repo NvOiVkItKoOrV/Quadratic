@@ -1,14 +1,22 @@
-#include"quadratic_solver.h"
+#include <stdio.h>
+#include <math.h>
+#include <assert.h>
+
+
+#include"types.h"
+#include"input.h"
+#include"quadratic_solver_func.h"
+#include"output.h"
+
 
 int main()
 {
-    printf("Hello!!!");
     coefficients coeffs = {};
-    solutions    sol = {};
+    solutions    sol    = {};
 
-    input_coefficients(&coeffs);
-    quadratic_equation_solver(coeffs, &sol);
-    output_coefficients(sol);
+    get_all_coefficients( &coeffs);
+    quadratic_equation_solver (coeffs, &sol);
+    output_coefficients (sol);
 
     return 0;
 }
