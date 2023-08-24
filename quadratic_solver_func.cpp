@@ -13,13 +13,8 @@ void quadratic_equation_solver (const coefficients set_of_coeffs, solutions *roo
     const double B = set_of_coeffs.b;
     const double C = set_of_coeffs.c;
 
-    int discr_is_neg_value  = -1;
-    int discr_is_zero       =  0;
-    int discr_is_pos_value  =  1;
 
-    int A_is_zero = 0;
-
-    if ( ( A_is_zero = sign_search(A) ) == ZERO_VALUE )
+    if ( sign_search(A) == ZERO_VALUE )
     {
         line_equation_solver (set_of_coeffs, roots);
     }
@@ -27,16 +22,16 @@ void quadratic_equation_solver (const coefficients set_of_coeffs, solutions *roo
     {
         roots->discriminant = discriminant_calculator (A, B, C);
 
-        if ( ( discr_is_neg_value = sign_search(roots->discriminant) ) == NEGATIVE_VALUE )
+        if ( sign_search(roots->discriminant) == NEGATIVE_VALUE )
         {
             roots->num_of_roots = ZERO_ROOTS;
         }
-        else if ( ( discr_is_zero = sign_search(roots->discriminant) ) == ZERO_VALUE )
+        else if ( sign_search(roots->discriminant) == ZERO_VALUE )
         {
             roots->x1 = -B / (2 * A);
             roots->num_of_roots = ONE_ROOT;
         }
-        else if ( ( discr_is_pos_value = sign_search(roots->discriminant) ) == POSITIVE_VALUE )
+        else if ( sign_search(roots->discriminant) == POSITIVE_VALUE )
         {
             double sqrt_discriminant = sqrt(roots->discriminant);
 
@@ -54,11 +49,9 @@ void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
     const double B = set_of_coeffs.b;
     const double C = set_of_coeffs.c;
 
-    int B_is_zero = 0;
-    int C_is_zero = 0;
-
-    if ( ( B_is_zero = sign_search(B) ) == 0)
-        if( ( C_is_zero = sign_search(C) ) == 0)
+    if ( sign_search(B) == 0)
+    {
+        if( sign_search(C) == 0)
         {
             roots->num_of_roots = INF_ROOTS;
         }
@@ -69,9 +62,9 @@ void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
     }
     else
     {
-    roots->x1           = -C / B;
-    roots->x2           = roots->x1;
-    roots->num_of_roots = ONE_ROOT;
+        roots->x1           = -C / B;
+        roots->x2           = roots->x1;
+        roots->num_of_roots = ONE_ROOT;
     }
 }
 
