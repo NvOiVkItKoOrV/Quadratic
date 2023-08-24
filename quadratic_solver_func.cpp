@@ -51,9 +51,14 @@ void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
 {
     assert(roots);
 
-    if (fabs(set_of_coeffs.b) <= EPSILON)
-    {
-        if(fabs(set_of_coeffs.c) <= EPSILON)
+    const double B = set_of_coeffs.b;
+    const double C = set_of_coeffs.c;
+
+    int B_is_zero = 0;
+    int C_is_zero = 0;
+
+    if ( ( B_is_zero = sign_search(B) ) == 0)
+        if( ( C_is_zero = sign_search(C) ) == 0)
         {
             roots->num_of_roots = INF_ROOTS;
         }
@@ -64,7 +69,7 @@ void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
     }
     else
     {
-    roots->x1           = -set_of_coeffs.c / set_of_coeffs.b;
+    roots->x1           = -C / B;
     roots->x2           = roots->x1;
     roots->num_of_roots = ONE_ROOT;
     }
