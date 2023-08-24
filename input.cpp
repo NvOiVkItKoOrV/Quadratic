@@ -15,7 +15,7 @@ void get_all_coefficients (coefficients *ptr_coeff)
     reading_interface (&(ptr_coeff->c));
 }
 
-int reading_interface (double *ptr_to_one_coeff)
+void reading_interface (double *ptr_to_one_coeff)
 {
     assert (ptr_to_one_coeff);
 
@@ -35,6 +35,9 @@ int reading_interface (double *ptr_to_one_coeff)
 
         case EOF_ERROR:
             printf("Command line has troubles. Please, try again:");
+            break;
+
+        case INPUT_SUCCESS:
             break;
 
         default:
