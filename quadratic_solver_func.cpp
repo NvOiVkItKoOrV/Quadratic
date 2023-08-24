@@ -49,9 +49,9 @@ void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
     const double B = set_of_coeffs.b;
     const double C = set_of_coeffs.c;
 
-    if ( sign_search(B) == 0)
+    if ( sign_search(B) == 0 )
     {
-        if( sign_search(C) == 0)
+        if( sign_search(C) == 0 )
         {
             roots->num_of_roots = INF_ROOTS;
         }
@@ -76,12 +76,15 @@ double discriminant_calculator(double A, double B, double C)
 
 int sign_search(double num)
 {
-    if (fabs(num) < EPSILON)
+    if ( fabs(num) < EPSILON )
         return ZERO_VALUE;
-    else if(num < EPSILON && fabs(num) > EPSILON)
+
+    else if( num < EPSILON && fabs(num) > EPSILON )
         return NEGATIVE_VALUE;
-    else if(num > EPSILON && fabs(num) > EPSILON)
+
+    else if( num > EPSILON && fabs(num) > EPSILON )
         return POSITIVE_VALUE;
+
     else
     {
         printf("Signum of the number can't be found");
