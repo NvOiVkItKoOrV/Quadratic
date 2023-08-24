@@ -9,31 +9,39 @@ void quadratic_equation_solver (const coefficients set_of_coeffs, solutions *roo
 {
     assert(roots);
 
-    if (fabs(set_of_coeffs.a) <= EPSILON)
+    const double A = set_of_coeffs.a;//for making code more readable
+    const double B = set_of_coeffs.b;
+    const double C = set_of_coeffs.c;
+
+    int discr_is_neg_value  = -1;
+    int discr_is_zero       =  0;
+    int discr_is_pos_value  =  1;
+
+    int A_is_zero = 0;
+
+    if ( ( A_is_zero = sign_search(A) ) == ZERO_VALUE )
     {
         line_equation_solver (set_of_coeffs, roots);
     }
     else
     {
-        roots->discriminant = discriminant_calculator (set_of_coeffs);
+        roots->discriminant = discriminant_calculator (A, B, C);
 
-        if (roots->discriminant < -EPSILON)
+        if ( ( discr_is_neg_value = sign_search(roots->discriminant) ) == NEGATIVE_VALUE )
         {
-            default_parameters(roots);
             roots->num_of_roots = ZERO_ROOTS;
         }
-        else if (fabs(roots->discriminant) <= EPSILON)
+        else if ( ( discr_is_zero = sign_search(roots->discriminant) ) == ZERO_VALUE )
         {
-            roots->x1 = -(set_of_coeffs.b) / (2 * set_of_coeffs.a);
-            roots->x2 = DEFAULT_NUMBER;
+            roots->x1 = -B / (2 * A);
             roots->num_of_roots = ONE_ROOT;
         }
-        else if (roots->discriminant > EPSILON)
+        else if ( ( discr_is_pos_value = sign_search(roots->discriminant) ) == POSITIVE_VALUE )
         {
             double sqrt_discriminant = sqrt(roots->discriminant);
 
-            roots->x1 = (-(set_of_coeffs.b) - sqrt_discriminant) / (2 * set_of_coeffs.a);
-            roots->x2 = (-(set_of_coeffs.b) + sqrt_discriminant) / (2 * set_of_coeffs.a);
+            roots->x1 = (-(B) - sqrt_discriminant) / (2 * A);
+            roots->x2 = (-(B) + sqrt_discriminant) / (2 * A);
             roots->num_of_roots = TWO_ROOTS;
         }
     }
@@ -47,12 +55,10 @@ void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
     {
         if(fabs(set_of_coeffs.c) <= EPSILON)
         {
-            default_parameters(roots);
             roots->num_of_roots = INF_ROOTS;
         }
         else
         {
-            default_parameters(roots);
             roots->num_of_roots = ZERO_ROOTS;
         }
     }
@@ -60,23 +66,28 @@ void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
     {
     roots->x1           = -set_of_coeffs.c / set_of_coeffs.b;
     roots->x2           = roots->x1;
-    roots->discriminant = DEFAULT_NUMBER;
     roots->num_of_roots = ONE_ROOT;
     }
 }
 
 
-double discriminant_calculator(const coefficients set_of_coeffs)
+double discriminant_calculator(double A, double B, double C)
 {
-    return (set_of_coeffs.b * set_of_coeffs.b) - (4 * set_of_coeffs.a * set_of_coeffs.c);
+    return (B * B) - (4 * A * C);
 }
 
-
-void default_parameters(solutions *roots)
+int sign_search(double num)
 {
-    assert(roots);
-
-    roots->x1           = DEFAULT_NUMBER;
-    roots->x2           = DEFAULT_NUMBER;
-    roots->discriminant = DEFAULT_NUMBER;
+    if (fabs(num) < EPSILON)
+        return ZERO_VALUE;
+    else if(num < EPSILON && fabs(num) > EPSILON)
+        return NEGATIVE_VALUE;
+    else if(num > EPSILON && fabs(num) > EPSILON)
+        return POSITIVE_VALUE;
+    else
+    {
+        printf("Signum of the number can't be found");
+        return MISTAKE_VALUE;
+    }
 }
+

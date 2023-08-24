@@ -18,10 +18,10 @@ struct solutions
 
 enum number_of_solutions
 {
-    ZERO_ROOTS =  0,
-    ONE_ROOT   =  1,
-    TWO_ROOTS  =  2,
-    INF_ROOTS  = -1 //unusual number
+    ZERO_ROOTS,
+    ONE_ROOT,
+    TWO_ROOTS,
+    INF_ROOTS
 };
 
 typedef enum
@@ -31,5 +31,13 @@ typedef enum
     BUF_OVERFLOW_ERROR,
     EOF_ERROR,
 } input_results;
+
+enum signum_values
+{
+    NEGATIVE_VALUE,
+    ZERO_VALUE,
+    POSITIVE_VALUE,
+    MISTAKE_VALUE
+};
 
 #endif /*TYPES_H*/
