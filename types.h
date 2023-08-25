@@ -34,10 +34,10 @@ typedef enum
 
 enum signum_values
 {
-    NEGATIVE_VALUE,
-    ZERO_VALUE,
-    POSITIVE_VALUE,
-    MISTAKE_VALUE
+    NEGATIVE_VALUE = -1,
+    ZERO_VALUE     =  0,
+    POSITIVE_VALUE =  1,
+    MISTAKE_VALUE  =  2
 };
 
 #endif /*TYPES_H*/

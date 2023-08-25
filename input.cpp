@@ -50,7 +50,7 @@ void reading_interface (double *ptr_to_one_coeff)
 input_results get_one_coefficient (double *ptr_coeff)
 {
 // TODO: Create your scan func using getchar
-    assert(ptr_coeff != nullptr);
+    assert(ptr_coeff);
 
     scanf("%lg", ptr_coeff);
     return INPUT_SUCCESS;

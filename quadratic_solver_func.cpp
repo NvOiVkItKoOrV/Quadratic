@@ -13,16 +13,15 @@ void quadratic_equation_solver (const coefficients set_of_coeffs, solutions *roo
     const double B = set_of_coeffs.b;
     const double C = set_of_coeffs.c;
 
-
-    if ( sign_search(A) == ZERO_VALUE )
+    if (sign_search(A) == ZERO_VALUE)
     {
-        line_equation_solver (set_of_coeffs, roots);
+        line_equation_solver(set_of_coeffs, roots);
     }
     else
     {
-        roots->discriminant = discriminant_calculator (A, B, C);
+        roots->discriminant = discriminant_calculator(A, B, C);
 
-        if ( sign_search(roots->discriminant) == NEGATIVE_VALUE )
+        if (sign_search(roots->discriminant) == NEGATIVE_VALUE)
         {
             roots->num_of_roots = ZERO_ROOTS;
         }
@@ -48,7 +47,6 @@ void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
 
     const double B = set_of_coeffs.b;
     const double C = set_of_coeffs.c;
-
     if ( sign_search(B) == 0 )
     {
         if( sign_search(C) == 0 )
@@ -63,18 +61,17 @@ void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
     else
     {
         roots->x1           = -C / B;
-        roots->x2           = roots->x1;
+        roots->x2           = DEFAULT_NUMBER;
         roots->num_of_roots = ONE_ROOT;
     }
 }
 
-
-double discriminant_calculator(double A, double B, double C)
+double discriminant_calculator (double A, double B, double C)
 {
     return (B * B) - (4 * A * C);
 }
 
-int sign_search(double num)
+int sign_search (const double num)
 {
     if ( fabs(num) < EPSILON )
         return ZERO_VALUE;
