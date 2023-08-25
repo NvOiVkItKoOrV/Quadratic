@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include"types.h"
 #include"input.h"
 
@@ -33,7 +35,7 @@ void reading_interface (double *ptr_to_one_coeff)
             printf("Buffer overflowed. Please, try again:");
             break;
 
-        case EOF_ERROR:
+        case TERMINAL_ERROR:
             printf("Command line has troubles. Please, try again:");
             break;
 
@@ -49,9 +51,34 @@ void reading_interface (double *ptr_to_one_coeff)
 
 input_results get_one_coefficient (double *ptr_coeff)
 {
-// TODO: Create your scan func using getchar
-    assert(ptr_coeff);
+    char buf[MAX_BUF_VAL] = {};
+    int  symb_count       = 0;
 
-    scanf("%lg", ptr_coeff);
-    return INPUT_SUCCESS;
+    while((buf[symb_count] = getchar()) != '\n' && symb_count < MAX_BUF_VAL)
+    symb_count++;
+
+    if(buf[0] == '\0')
+        return TERMINAL_ERROR;
+
+    else if (symb_count >= MAX_BUF_VAL)
+        return BUF_OVERFLOW_ERROR;
+
+    else if(isdigit(*buf))
+    {
+        char * start         = buf;
+        char * end           = buf + symb_count;
+        int    whitespase_cl = 0;
+
+        while(buf[whitespase_cl] == ' ')
+        whitespase_cl++;
+
+        start = buf + whitespase_cl;
+
+        *ptr_coeff = strtod(start, &end);
+        return INPUT_SUCCESS;
+    }
+
+    else
+    return INPUT_ERROR;
+
 }

@@ -29,7 +29,7 @@ typedef enum
     INPUT_ERROR,
     INPUT_SUCCESS,
     BUF_OVERFLOW_ERROR,
-    EOF_ERROR,
+    TERMINAL_ERROR,
 } input_results;
 
 enum signum_values
@@ -39,5 +39,14 @@ enum signum_values
     POSITIVE_VALUE =  1,
     MISTAKE_VALUE  =  2
 };
+
+typedef enum
+{
+SOL_QUAD_EQ_PROG,
+TESTING_PROG,
+COLOUR_OF_TERMINAL_CHANGE_PROG,
+ERROR,
+QUIT,
+}command_to_do;
 
 #endif /*TYPES_H*/

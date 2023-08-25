@@ -4,4 +4,4 @@ FLAGS = -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop
 all: object
 	./out
 object:
-	$(G++) $(FLAGS) main.cpp input.cpp quadratic_solver_func.cpp output.cpp -o out
+	$(G++) $(FLAGS) main.cpp input.cpp quadratic_solver_func.cpp output.cpp users_interface.cpp unit_test.cpp -o out

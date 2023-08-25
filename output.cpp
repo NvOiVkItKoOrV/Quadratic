@@ -22,7 +22,7 @@ void output_coefficients (const solutions roots)
         break;
 
     default:
-        printf("Programm is died :(\n");
+        fprintf(stderr, "Programm is died :(\n");
         break;
     }
 }
