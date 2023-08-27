@@ -11,13 +11,13 @@ void get_all_coefficients (coefficients *ptr_coeff)
 {
     clear_stdin ();
 
-    printf("Enter coefficient A:");
+    printf("Enter coefficient A: ");
     reading_interface (&(ptr_coeff->a));
 
-    printf("Enter coefficient B:");
+    printf("Enter coefficient B: ");
     reading_interface (&(ptr_coeff->b));
 
-    printf("Enter coefficient C:");
+    printf("Enter coefficient C: ");
     reading_interface (&(ptr_coeff->c));
     printf("---------------------------------------------------------------------------------\n");
 }
@@ -33,15 +33,15 @@ void reading_interface (double *ptr_to_one_coeff)
         switch (status)
         {
         case INPUT_ERROR:
-            printf("Something wrong. Please, try again:\n");
+            printf("Something wrong. Please, try again: \n");
             break;
 
         case BUF_OVERFLOW_ERROR:
-            printf("Buffer overflowed. Please, try again:\n");
+            printf("Buffer overflowed. Please, try again: \n");
             break;
 
         case TERMINAL_ERROR:
-            printf("Command line has troubles. Please, try again:\n");
+            printf("Command line has troubles. Please, try again: \n");
             break;
 
         case INPUT_SUCCESS:
@@ -60,7 +60,11 @@ input_results get_one_coefficient (double *ptr_coeff)
 
     char buf[MAX_BUF_VAL + 1] = {0};
 
-    coeff_to_buf(buf, MAX_BUF_VAL);
+    if(coeff_to_buf(buf, MAX_BUF_VAL))
+    {
+        return INPUT_ERROR;
+    }
+
 
     if (buf[0] == '\0')
         return TERMINAL_ERROR;
@@ -85,7 +89,7 @@ input_results get_one_coefficient (double *ptr_coeff)
     }
 }
 
-void coeff_to_buf (char *buf, int size)
+int coeff_to_buf (char *buf, int size)
 {
     assert(buf);
 
@@ -100,5 +104,15 @@ void coeff_to_buf (char *buf, int size)
         symb_count++;
     }
 
-    buf[symb_count] = '\0';
+    if (code_of_symb != '\n')
+    {
+        clear_stdin();
+        return 1;
+    }
+    else
+    {
+        buf[symb_count] = '\0';
+        return 0;
+    }
+
 }

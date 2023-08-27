@@ -62,10 +62,9 @@ command_to_do get_command ()
 {
     char buf[MAX_BUF_VAL] = {};
 
-    //coeff_to_buf(buf, MAX_BUF_VAL - 1);
     scanf("%s", buf);
 
-    char * buf_to_check = buf;
+    char * buf_to_check = strtok(buf, " ");;
 
     char colour_command[]   = "colour";
     char test_command[]     = "test";
@@ -142,8 +141,8 @@ colour get_new_colour()
 {
     char buf[MAX_BUF_VAL] = {};
 
-    //coeff_to_buf(buf, MAX_BUF_VAL - 1);
     scanf("%s", buf);
+
     char *buf_to_check = buf;
 
     const char red_colour[]    = "red";
