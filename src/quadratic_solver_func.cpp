@@ -2,16 +2,16 @@
 #include <assert.h>
 #include <math.h>
 
-#include "types.h"
-#include "quadratic_solver_func.h"
+#include "../include/types.h"
+#include "../include/quadratic_solver_func.h"
 
-void quadratic_equation_solver (const coefficients set_of_coeffs, solutions *roots)
+void quadratic_equation_solver (const coefficients *set_of_coeffs, solutions *roots)
 {
     assert(roots);
 
-    const double A = set_of_coeffs.a;
-    const double B = set_of_coeffs.b;
-    const double C = set_of_coeffs.c;
+    const double A = set_of_coeffs->a;
+    const double B = set_of_coeffs->b;
+    const double C = set_of_coeffs->c;
 
     if (is_equal(A, 0.0))
     {
@@ -41,12 +41,12 @@ void quadratic_equation_solver (const coefficients set_of_coeffs, solutions *roo
     }
 }
 
-void line_equation_solver (const coefficients set_of_coeffs, solutions *roots)
+void line_equation_solver (const coefficients *set_of_coeffs, solutions *roots)
 {
     assert(roots);
 
-    const double B = set_of_coeffs.b;
-    const double C = set_of_coeffs.c;
+    const double B = set_of_coeffs->b;
+    const double C = set_of_coeffs->c;
 
     if (is_equal(B, 0.0))
     {

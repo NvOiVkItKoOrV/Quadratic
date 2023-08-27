@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
-#include "types.h"
-#include "unit_test.h"
-#include "quadratic_solver_func.h"
+#include "../include/types.h"
+#include "../include/unit_test.h"
+#include "../include/quadratic_solver_func.h"
 
 void full_testing_func (const char *test_file_name)
 {
@@ -62,7 +62,7 @@ void unit_test (right_coefficients r_coeffs, right_solutions r_sol, int *n_tests
     coeffs.b = r_coeffs.right_b;
     coeffs.c = r_coeffs.right_c;
 
-    quadratic_equation_solver(coeffs, &sol);
+    quadratic_equation_solver(&coeffs, &sol);
 
     if (is_equal(sol.x1,     r_sol.right_x1     ) &&
         is_equal(sol.x2,     r_sol.right_x2     ) &&

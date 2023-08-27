@@ -3,12 +3,15 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <errno.h>
-#include "types.h"
-#include "input.h"
-#include "users_interface.h"
+
+#include "../include/types.h"
+#include "../include/input.h"
+#include "../include/users_interface.h"
 
 void get_all_coefficients (coefficients *ptr_coeff)
 {
+    assert(ptr_coeff);
+
     clear_stdin ();
 
     printf("Enter coefficient A: ");
@@ -24,7 +27,7 @@ void get_all_coefficients (coefficients *ptr_coeff)
 
 void reading_interface (double *ptr_to_one_coeff)
 {
-    assert (ptr_to_one_coeff);
+    assert(ptr_to_one_coeff);
 
     input_results status = INPUT_ERROR;
 

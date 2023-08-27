@@ -3,12 +3,12 @@
 #include <ctype.h>
 #include <string.h>
 #include <assert.h>
-#include "types.h"
-#include "input.h"
-#include "users_interface.h"
-#include "output.h"
-#include "quadratic_solver_func.h"
-#include "unit_test.h"
+#include "../include/types.h"
+#include "../include/input.h"
+#include "../include/users_interface.h"
+#include "../include/output.h"
+#include "../include/quadratic_solver_func.h"
+#include "../include/unit_test.h"
 
 
 void users_interface()
@@ -97,8 +97,8 @@ void solve_quad_prog()
     solutions    sol    = {};
 
     get_all_coefficients(&coeffs);
-    quadratic_equation_solver(coeffs, &sol);
-    output_coefficients(sol);
+    quadratic_equation_solver(&coeffs, &sol);
+    output_coefficients(&sol);
 }
 
 void colour_changer()

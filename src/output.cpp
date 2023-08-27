@@ -1,21 +1,21 @@
 #include <stdio.h>
-#include "types.h"
-#include "output.h"
+#include "../include/types.h"
+#include "../include/output.h"
 
-void output_coefficients (const solutions roots)
+void output_coefficients (const solutions *roots)
 {
-    switch(roots.n_roots)
+    switch(roots->n_roots)
     {
     case ZERO_ROOTS:
         printf("No roots\n");
         break;
 
     case ONE_ROOT:
-        printf("One root:%lf\n", roots.x1);
+        printf("One root:%lf\n", roots->x1);
         break;
 
     case TWO_ROOTS:
-        printf("Two roots:%lf %lf\n", roots.x1, roots.x2);
+        printf("Two roots:%lf %lf\n", roots->x1, roots->x2);
         break;
 
     case INF_ROOTS:
