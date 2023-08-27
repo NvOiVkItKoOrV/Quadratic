@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include "types.h"
+#include "output.h"
 
 void output_coefficients (const solutions roots)
 {
-    switch(roots.num_of_roots)
+    switch(roots.n_roots)
     {
     case ZERO_ROOTS:
         printf("No roots\n");

@@ -13,7 +13,7 @@ struct solutions
     double x1;
     double x2;
     double discriminant;
-    int    num_of_roots;
+    int    n_roots;
 };
 
 enum number_of_solutions
@@ -42,11 +42,20 @@ enum signum_values
 
 typedef enum
 {
-SOL_QUAD_EQ_PROG,
-TESTING_PROG,
-COLOUR_OF_TERMINAL_CHANGE_PROG,
-ERROR,
-QUIT,
-}command_to_do;
+    SOL_QUAD_EQ_PROG,
+    TESTING_PROG,
+    COLOUR_OF_TERMINAL_CHANGE_PROG,
+    ERROR,
+    HELP,
+    QUIT,
+} command_to_do;
+
+typedef enum
+{
+    RED,
+    YELLOW,
+    PURPLE,
+    DEFAULT,
+} colour;
 
 #endif /*TYPES_H*/

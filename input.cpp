@@ -2,11 +2,15 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include"types.h"
-#include"input.h"
+#include <errno.h>
+#include "types.h"
+#include "input.h"
+#include "users_interface.h"
 
 void get_all_coefficients (coefficients *ptr_coeff)
 {
+    clear_stdin ();
+
     printf("Enter coefficient A:");
     reading_interface (&(ptr_coeff->a));
 
@@ -15,6 +19,7 @@ void get_all_coefficients (coefficients *ptr_coeff)
 
     printf("Enter coefficient C:");
     reading_interface (&(ptr_coeff->c));
+    printf("---------------------------------------------------------------------------------\n");
 }
 
 void reading_interface (double *ptr_to_one_coeff)
@@ -23,27 +28,27 @@ void reading_interface (double *ptr_to_one_coeff)
 
     input_results status = INPUT_ERROR;
 
-    while ((status = get_one_coefficient (ptr_to_one_coeff)) != INPUT_SUCCESS)
+    while ( (status = get_one_coefficient(ptr_to_one_coeff)) != INPUT_SUCCESS )
     {
         switch (status)
         {
         case INPUT_ERROR:
-            printf("Something wrong. Please, try again:");
+            printf("Something wrong. Please, try again:\n");
             break;
 
         case BUF_OVERFLOW_ERROR:
-            printf("Buffer overflowed. Please, try again:");
+            printf("Buffer overflowed. Please, try again:\n");
             break;
 
         case TERMINAL_ERROR:
-            printf("Command line has troubles. Please, try again:");
+            printf("Command line has troubles. Please, try again:\n");
             break;
 
         case INPUT_SUCCESS:
             break;
 
         default:
-            printf("x_x wtf?");
+            printf("x_x wtf?\n");
             break;
         }
     }
@@ -51,34 +56,49 @@ void reading_interface (double *ptr_to_one_coeff)
 
 input_results get_one_coefficient (double *ptr_coeff)
 {
-    char buf[MAX_BUF_VAL] = {};
-    int  symb_count       = 0;
+    assert(ptr_coeff);
 
-    while((buf[symb_count] = getchar()) != '\n' && symb_count < MAX_BUF_VAL)
-    symb_count++;
+    char buf[MAX_BUF_VAL + 1] = {0};
 
-    if(buf[0] == '\0')
+    coeff_to_buf(buf, MAX_BUF_VAL);
+
+    if (buf[0] == '\0')
         return TERMINAL_ERROR;
 
-    else if (symb_count >= MAX_BUF_VAL)
-        return BUF_OVERFLOW_ERROR;
+    char *end = nullptr;
 
-    else if(isdigit(*buf))
+    double res = strtod(buf, &end);
+
+    if (end == buf)
     {
-        char * start         = buf;
-        char * end           = buf + symb_count;
-        int    whitespase_cl = 0;
-
-        while(buf[whitespase_cl] == ' ')
-        whitespase_cl++;
-
-        start = buf + whitespase_cl;
-
-        *ptr_coeff = strtod(start, &end);
+        return INPUT_ERROR;
+    }
+    else if (errno == ERANGE)
+    {
+        errno = 0;
+        return INPUT_ERROR; //OUT_OF_RANGE_ERROR;
+    }
+    else
+    {
+        *ptr_coeff = res;
         return INPUT_SUCCESS;
     }
+}
 
-    else
-    return INPUT_ERROR;
+void coeff_to_buf (char *buf, int size)
+{
+    assert(buf);
 
+    int symb_count   = 0;
+    int code_of_symb = 0;
+
+    size -= 1;  // because of \0 at the end of buffer.
+
+    while (symb_count < size && (code_of_symb = getchar()) != '\n')
+    {
+        buf[symb_count] = (char) code_of_symb;
+        symb_count++;
+    }
+
+    buf[symb_count] = '\0';
 }
