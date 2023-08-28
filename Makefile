@@ -12,8 +12,9 @@ FLAGS = -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop
 		-fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr
 
 all: object
-	./out
+
 object:
 	@ $(G++) $(FLAGS) src/main.cpp src/input.cpp src/quadratic_solver_func.cpp src/output.cpp src/users_interface.cpp src/unit_test.cpp -o out
-def:
-	@ $(G++) $(FLAGS) src/main.cpp src/input.cpp src/quadratic_solver_func.cpp src/output.cpp src/users_interface.cpp src/unit_test.cpp -E out > define
+
+run:
+	@ ./out
