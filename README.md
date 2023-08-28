@@ -14,7 +14,7 @@
 
 ## How does it work?
 
-The option  of this programm is to solve quadratic equations (Ax^2 + Bx + C =0) and print the roots in the terminal.
+The option of this programm is to solve quadratic equations (Ax^2 + Bx + C =0) and print the roots in the terminal.
 Coefficients can be entered from keyboard.
 Also it has other options for testing and if you have LINUX - changing colours in terminal. All commands you can see in the usage of this programm.
 
