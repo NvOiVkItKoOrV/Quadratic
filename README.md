@@ -64,7 +64,8 @@ You need to enter 3 coefficients in turn from the keyboard, each time pressing _
 
 
 ## Credits
-___Created by Viktor Novikov :)___
+___Created by Viktor Novikov )___
+
 
 
 
